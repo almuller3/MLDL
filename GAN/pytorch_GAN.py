@@ -247,57 +247,6 @@ class Discriminator(nn.Module):
     def forward(self, input):
         return self.main(input)
     
-# class DiscriminatorResidualBlock(nn.Module):
-#     def __init__(self, in_features):
-#         super(DiscriminatorResidualBlock, self).__init__()
-#         self.block = nn.Sequential(
-#             nn.Conv2d(in_features, in_features, kernel_size=3, stride=1, padding=1, bias=False),
-#             nn.BatchNorm2d(in_features),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             nn.Conv2d(in_features, in_features, kernel_size=3, stride=1, padding=1, bias=False),
-#             nn.BatchNorm2d(in_features)
-#         )
-
-#     def forward(self, x):
-#         return x + self.block(x)
-   
-    
-# class Discriminator(nn.Module):
-#     def __init__(self, ngpu):
-#         super(Discriminator, self).__init__()
-#         self.ngpu = ngpu
-#         self.main = nn.Sequential(
-#             # input is ``(nc) x 64 x 64``
-#             nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             DiscriminatorResidualBlock(ndf),
-#             # state size. ``(ndf) x 32 x 32``
-#             nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False),
-#             nn.BatchNorm2d(ndf * 2),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             DiscriminatorResidualBlock(ndf * 2),
-#             # state size. ``(ndf*2) x 16 x 16``
-#             nn.Conv2d(ndf * 2, ndf * 4, 4, 2, 1, bias=False),
-#             nn.BatchNorm2d(ndf * 4),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             DiscriminatorResidualBlock(ndf * 4),
-#             # state size. ``(ndf*4) x 8 x 8``
-#             nn.Conv2d(ndf * 4, ndf * 8, 4, 2, 1, bias=False),
-#             nn.BatchNorm2d(ndf * 8),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             DiscriminatorResidualBlock(ndf * 8),
-#             # state size. ``(ndf*8) x 4 x 4``
-#             nn.Conv2d(ndf * 8, 1, 4, 1, 0, bias=False),
-#             nn.Sigmoid()
-#         )
-
-#     def forward(self, input):
-#         return self.main(input)
-
-
-
-# In[86]:
-
 
 # Create the Discriminator
 netD = Discriminator(ngpu).to(device)
@@ -314,14 +263,10 @@ netD.apply(weights_init)
 # Print the model
 print(netD)
 
-
-# In[87]:
-
-
 # Initialize the ``BCELoss`` function
 criterion = nn.BCELoss()
 
-# Create batch of latent vectors that we will use to visualize
+# Create batch of latent vectors  to visualize
 #  the progression of the generator
 fixed_noise = torch.randn(64, nz, 1, 1, device=device)
 
@@ -332,9 +277,6 @@ fake_label = 0.
 # Setup Adam optimizers for both G and D
 optimizerD = optim.Adam(netD.parameters(), lr=lr, betas=(beta1, 0.999))
 optimizerG = optim.Adam(netG.parameters(), lr=lr, betas=(beta1, 0.999))
-
-
-# In[88]:
 
 
 # Training Loop
@@ -420,9 +362,6 @@ for epoch in range(num_epochs):
         iters += 1
 
 
-# In[89]:
-
-
 plt.figure(figsize=(10,5))
 plt.title("Generator and Discriminator Loss During Training")
 plt.plot(G_losses,label="G")
@@ -433,8 +372,6 @@ plt.legend()
 plt.show()
 
 
-# In[90]:
-
 
 fig = plt.figure(figsize=(8,8))
 plt.axis("off")
@@ -442,10 +379,6 @@ ims = [[plt.imshow(np.transpose(i,(1,2,0)), animated=True)] for i in img_list]
 ani = animation.ArtistAnimation(fig, ims, interval=1000, repeat_delay=1000, blit=True)
 
 HTML(ani.to_jshtml())
-
-
-# In[91]:
-
 
 # Grab a batch of real images from the dataloader
 real_batch = next(iter(dataloader))
@@ -463,42 +396,6 @@ plt.axis("off")
 plt.title("Fake Images")
 plt.imshow(np.transpose(img_list[-1],(1,2,0)))
 plt.show()
-
-
-# In[16]:
-
-
-torch.cuda.is_available()
-
-
-# In[19]:
-
-
-# Decide which device we want to run on
-device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
-
-
-# In[20]:
-
-
-if torch.cuda.is_available():
-    for i in range(torch.cuda.device_count()):
-        print(torch.cuda.get_device_name(i), "- Device ID:", i)
-
-
-# In[21]:
-
-
-device
-
-
-# In[22]:
-
-
-ngpu
-
-
-# In[ ]:
 
 
 
