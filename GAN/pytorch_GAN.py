@@ -1,10 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
 
-# In[54]:
-
-
-#%matplotlib inline
+#matplotlib inline
 import argparse
 import os
 import random
@@ -22,18 +17,12 @@ import matplotlib.animation as animation
 from IPython.display import HTML
 
 
-# In[55]:
-
-
 manualSeed = 999
 #manualSeed = random.randint(1, 10000) # use if you want new results
 print("Random Seed: ", manualSeed)
 random.seed(manualSeed)
 torch.manual_seed(manualSeed)
 torch.use_deterministic_algorithms(True) # Needed for reproducible results
-
-
-# In[56]:
 
 
 # Root directory for dataset
@@ -74,9 +63,6 @@ beta1 = 0.5
 ngpu = 1
 
 
-# In[75]:
-
-
 # We can use an image folder dataset the way we have it setup.
 # Create the dataset
 dataset = dset.ImageFolder(root=dataroot,
@@ -105,9 +91,6 @@ plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:64], padding=
 plt.show()
 
 
-# In[76]:
-
-
 # custom weights initialization called on ``netG`` and ``netD``
 def weights_init(m):
     classname = m.__class__.__name__
@@ -116,9 +99,6 @@ def weights_init(m):
     elif classname.find('BatchNorm') != -1:
         nn.init.normal_(m.weight.data, 1.0, 0.02)
         nn.init.constant_(m.bias.data, 0)
-
-
-# In[83]:
 
 
 # Generator Code
@@ -154,51 +134,6 @@ class Generator(nn.Module):
         return self.main(input)
 
 
-# class ResidualBlock(nn.Module):
-#     def __init__(self, in_features):
-#         super(ResidualBlock, self).__init__()
-#         self.block = nn.Sequential(
-#             nn.Conv2d(in_features, in_features, kernel_size=3, stride=1, padding=1, bias=False),
-#             nn.BatchNorm2d(in_features),
-#             nn.ReLU(True),
-#             nn.Conv2d(in_features, in_features, kernel_size=3, stride=1, padding=1, bias=False),
-#             nn.BatchNorm2d(in_features)
-#         )
-
-#     def forward(self, x):
-#         return x + self.block(x)
-
-# class Generator(nn.Module):
-#     def __init__(self, ngpu):
-#         super(Generator, self).__init__()
-#         self.ngpu = ngpu
-#         self.main = nn.Sequential(
-#             nn.ConvTranspose2d(nz, ngf * 8, 4, 1, 0, bias=False),
-#             nn.BatchNorm2d(ngf * 8),
-#             nn.ReLU(True),
-#             ResidualBlock(ngf * 8),
-#             nn.ConvTranspose2d(ngf * 8, ngf * 4, 4, 2, 1, bias=False),
-#             nn.BatchNorm2d(ngf * 4),
-#             nn.ReLU(True),
-#             ResidualBlock(ngf * 4),
-#             nn.ConvTranspose2d(ngf * 4, ngf * 2, 4, 2, 1, bias=False),
-#             nn.BatchNorm2d(ngf * 2),
-#             nn.ReLU(True),
-#             ResidualBlock(ngf * 2),
-#             nn.ConvTranspose2d(ngf * 2, ngf, 4, 2, 1, bias=False),
-#             nn.BatchNorm2d(ngf),
-#             nn.ReLU(True),
-#             ResidualBlock(ngf),
-#             nn.ConvTranspose2d(ngf, nc, 4, 2, 1, bias=False),
-#             nn.Tanh()
-#         )
-
-#     def forward(self, input):
-#         return self.main(input)
-
-
-# In[84]:
-
 
 # Create the generator
 netG = Generator(ngpu).to(device)
@@ -214,10 +149,6 @@ netG.apply(weights_init)
 
 # Print the model
 print(netG)
-
-
-# In[85]:
-
 
 class Discriminator(nn.Module):
     def __init__(self, ngpu):
