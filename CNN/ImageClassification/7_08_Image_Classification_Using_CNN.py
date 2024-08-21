@@ -1,9 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # # __Image Classification Using CNN__
 # 
-# Let's see a working example of training a convolutional neural network (CNN) on a dataset of flower images.
+#I will create a basic working example of training a convolutional neural network (CNN) on a dataset of flower images for classification purposes.
 
 # ## Steps to Be Followed:
 # 
