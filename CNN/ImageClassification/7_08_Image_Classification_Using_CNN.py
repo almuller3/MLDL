@@ -23,9 +23,6 @@
 # - Import the required libraries
 # - Import the given dataset using given link
 
-# In[3]:
-
-
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -37,7 +34,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
 
-# In[4]:
+
 
 
 import pathlib
@@ -51,27 +48,17 @@ data_dir = pathlib.Path(data_dir)
 # - Retrieve the file paths of the images in the **roses** subdirectory and display the first two images
 # - Retrieve the file paths of the images in the __tulips__ subdirectory and display the first image
 
-# In[5]:
 
 
 image_count = len(list(data_dir.glob('*/*.jpg')))
 print(image_count)
 
 
-# In[6]:
-
-
 roses = list(data_dir.glob('roses/*'))
 PIL.Image.open(str(roses[0]))
 
 
-# In[7]:
-
-
 PIL.Image.open(str(roses[1]))
-
-
-# In[8]:
 
 
 tulips = list(data_dir.glob('tulips/*'))
@@ -88,8 +75,6 @@ PIL.Image.open(str(tulips[0]))
 #   - **image_size**: The desired size for the images in the dataset
 #   - **batch_size**: The number of samples per batch
 # 
-
-# In[9]:
 
 
 batch_size = 32
@@ -118,9 +103,6 @@ train_ds = tf.keras.utils.image_dataset_from_directory(
 #   - **image_size**: The desired size for the images in the dataset
 #   - **batch_size**: The number of samples per batch
 
-# In[10]:
-
-
 val_ds = tf.keras.utils.image_dataset_from_directory(
   data_dir,
   validation_split=0.2,
@@ -144,14 +126,9 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
 # - Set the title of the subplot to the corresponding class name using **plt.title(class_names[labels[i]])**
 # - Disable the axis labels for the subplot using __plt.axis("off")__
 
-# In[11]:
-
-
 class_names = train_ds.class_names
 print(class_names)
 
-
-# In[12]:
 
 
 import matplotlib.pyplot as plt
@@ -182,16 +159,10 @@ for images, labels in train_ds.take(1):
 # - Print the minimum and maximum pixel values of the first image using **np.min(first_image)** and __np.max(first_image)__
 # 
 
-# In[13]:
-
-
 AUTOTUNE = tf.data.AUTOTUNE
 
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
-
-
-# In[14]:
 
 
 normalization_layer = layers.Rescaling(1./255)
@@ -208,9 +179,6 @@ print(np.min(first_image), np.max(first_image))
 # ### Step 7: Creating a Convolutional Neural Network Model With Data Augmentation
 # - Create a data augmentation pipeline using **keras.Sequential** with three augmentation layers: random horizontal flip, random rotation, and random zoom
 # - Determine the number of classes based on the **class_names**
-
-# In[15]:
-
 
 data_augmentation = keras.Sequential(
   [
@@ -229,9 +197,6 @@ data_augmentation = keras.Sequential(
 # - Add max pooling layers after each convolutional layer.
 # - Add a dropout layer with a rate of **0.2**.
 # - Add dense layers with ReLU activation, ending with a dense output layer.
-
-# In[16]:
-
 
 num_classes = len(class_names)
 model = Sequential([
@@ -257,16 +222,10 @@ model = Sequential([
 # - Display the summary of the model architecture and the number of parameters
 # 
 
-# In[17]:
-
-
 model.summary()
 
 
 # - Compile the model with the specified optimizer, loss function, and metrics.
-
-# In[18]:
-
 
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -280,9 +239,6 @@ model.compile(optimizer='adam',
 # ### Step 9: Training the Model
 # - Set the number of epochs to 3
 # - Train the model using the fit method, passing the training and validation datasets, and the number of epochs
-
-# In[21]:
-
 
 epochs=5
 history = model.fit(
@@ -301,8 +257,6 @@ history = model.fit(
 # - Plot the training and validation accuracy in a subplot
 # - Plot the training and validation loss in a subplot
 # - Display the plotted figures
-
-# In[ ]:
 
 
 acc = history.history['accuracy']
@@ -339,7 +293,6 @@ plt.show()
 # - Calculate the softmax scores and identify the class with the highest confidence
 # - Print the predicted class and its corresponding confidence percentage
 
-# In[ ]:
 
 
 sunflower_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/592px-Red_sunflower.jpg"
