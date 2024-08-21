@@ -1,68 +1,53 @@
-# Variational Autoencoder (VAE) on MNIST
+# Image Classification Using Convolutional Neural Networks (CNN)
 
-This repository contains the implementation of a Variational Autoencoder (VAE) using PyTorch. The model is trained on the MNIST dataset, which consists of 28x28 grayscale images of handwritten digits. VAEs are a class of generative models that learn to encode data into a latent space and then decode it back to reconstruct the original data.
+This project implements an image classification model using Convolutional Neural Networks (CNNs) in Python with TensorFlow and Keras. The project involves building, training, and evaluating a CNN model on a dataset of images.
 
 ## Table of Contents
 
-- [Overview](#overview)
+- [Project Overview](#project-overview)
 - [Model Architecture](#model-architecture)
+- [Dataset](#dataset)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Training](#training)
-- [Improving the Model](#improving-the-model)
+- [Evaluation](#evaluation)
 - [Results](#results)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
-## Overview
+## Project Overview
 
-The Variational Autoencoder (VAE) is a generative model that learns a probabilistic mapping of input data to a latent space, and from this latent space, it reconstructs the input data. VAEs are particularly useful for generating new data samples, dimensionality reduction, and learning interpretable latent representations.
-
-This project includes:
-
-- A PyTorch implementation of the VAE.
-- Training on the MNIST dataset.
-- Visualization of the latent space and generated samples.
+The goal of this project is to classify images into different categories using a CNN model. CNNs are a class of deep neural networks that have proven very effective for image classification tasks.
 
 ## Model Architecture
 
-### Encoder
-- **Input**: 784-dimensional vector (flattened 28x28 image).
-- **Layers**:
-  - Fully connected layer (784 -> 512).
-  - Two separate fully connected layers for the mean (`mu`) and log-variance (`logvar`) of the latent space.
-- **Output**: Mean and log-variance vectors for the latent space.
+The CNN model consists of several layers:
 
-### Reparameterization Trick
-- Samples a latent vector `z` from the distribution defined by the mean (`mu`) and log-variance (`logvar`), ensuring that the network can backpropagate through the stochastic sampling process.
+1. **Convolutional Layers**: Extract features from the input images.
+2. **Pooling Layers**: Downsample the feature maps to reduce dimensionality.
+3. **Fully Connected Layers**: Combine features and make final predictions.
+4. **Output Layer**: Uses softmax activation to output class probabilities.
 
-### Decoder
-- **Input**: Latent vector `z`.
-- **Layers**:
-  - Fully connected layer (latent_dim -> 512).
-  - Fully connected layer (512 -> 784).
-- **Output**: Reconstructed image (784-dimensional vector).
+## Dataset
 
-### Loss Function
-- **Reconstruction Loss**: Binary Cross-Entropy (BCE) loss between the original and reconstructed images.
-- **KL Divergence Loss**: Regularization term that forces the learned latent distribution to be close to a standard normal distribution.
+The dataset used for this project consists of images from [specify dataset source here]. Each image belongs to one of several predefined classes.
 
 ## Prerequisites
 
 - Python 3.7+
-- PyTorch 1.6+
-- torchvision
-- numpy
-- matplotlib
+- TensorFlow 2.x
+- Keras
+- NumPy
+- Matplotlib
 
 ## Installation
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/vae-mnist.git
-    cd vae-mnist
+    git clone https://github.com/yourusername/image-classification-cnn.git
+    cd image-classification-cnn
     ```
 
 2. Install the required dependencies:
@@ -73,7 +58,7 @@ This project includes:
 
 ## Usage
 
-You can run the VAE model on the MNIST dataset by executing the following command:
+To run the project, execute the following command:
 
 ```bash
-python train_vae.py
+python Image_Classification_Using_CNN.py
