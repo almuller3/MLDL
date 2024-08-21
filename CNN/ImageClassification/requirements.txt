@@ -1,0 +1,4 @@
+tensorflow==2.x.x
+keras==2.x.x
+numpy==1.x.x
+matplotlib==3.x.x
