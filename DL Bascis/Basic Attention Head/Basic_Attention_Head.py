@@ -63,3 +63,6 @@ dummy_input = torch.rand(1, seq_length, embed_size)  # Batch size of 1
 attention_layer = FlashAttention(embed_size, heads, chunk_size)
 output = attention_layer(dummy_input, dummy_input, dummy_input)
 print(output.shape)  # Should return torch.Size([1, seq_length, embed_size])
+
+
+print (attention_layer)
